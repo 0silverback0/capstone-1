@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h1 class="text-center">Edit {{g.user.username}}</h1>
+
+<div class="row justify-content-center">
+  <form method="POST" action="/user/edit/{{g.user.id}}">
+        {{ form.hidden_tag() }}
+
+      {% for field in form
+            if field.widget.input_type != 'hidden' %}
+
+        <p>
+          {{ field.label }}
+          {{ field (class_="form-control")}}
+
+          {% for error in field.errors %}
+            {{ error }}
+          {% endfor %}
+        </p>
+
+      {% endfor %}
+
+    <button type="submit" class="btn btn-success btn-sm">Edit!</button>
+  </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h1 class="text-center">Hip Hop Heads</h1>
+
+<div class="container">
+<div class="row">
+{% for user in users %}
+<div class="col m-3 text-center">
+    <img src="{{user.img_url}}" />
+    <p class="">{{user.username}}</p>
+    <a href="/follow/{{user.id}}" class="btn btn-primary">follow</a>
+</div>
+{% endfor %}
+</div>
+</div>
+{% endblock %}

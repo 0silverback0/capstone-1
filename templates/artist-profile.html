@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h1>{{artist.name}}'s Albums</h1>
+<ul>
+    {% for key, value in albums.items() %}
+        
+    <a href="/album-tracks/{{value}}"> <li>{{key}}</li> </a>
+
+    {% endfor %}
+</ul>
+
+<a href="/add-artist" class="btn btn-primary">Go back</a>
+
+{% endblock %}

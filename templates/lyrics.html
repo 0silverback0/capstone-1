@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Lyrics</h1>
+    <p>{{lyrics.lyrics}}</p>
+    <small>{{lyrics.copyright}}</small>
+</div>
+
+<a href="/add-artist" class="btn btn-primary">Go back</a>
+{% endblock %}

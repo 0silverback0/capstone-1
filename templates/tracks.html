@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h1>Tracks</h1>
+
+<ul>
+{% for key, value in track.items() %}
+<a href="/track/lyrics/{{value}}"> <li>{{key}}</li> </a>
+{% endfor %}
+</ul>
+
+<a href="/add-artist" class="btn btn-primary">Go back</a>
+{% endblock %}

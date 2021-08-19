@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<h1>New Post for {{g.user.username}}</h1>
+
+<form method="POST" action="/post/{{g.user.id}}">
+    {{ form.hidden_tag() }} <!--add form control here class_??? -->
+
+  {% for field in form
+         if field.widget.input_type != 'hidden' %}
+
+    <p>
+      {{ field.label }}
+      {{ field }}
+
+      {% for error in field.errors %}
+        {{ error }}
+      {% endfor %}
+    </p>
+
+  {% endfor %}
+  <button type="submit" class="btn btn-primary">Post!</button>
+</form>
+
+{% endblock %}

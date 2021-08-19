@@ -1,0 +1,41 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h1 class="text-center">Add Artist</h1>
+
+<div class="container">
+
+  <div class="row justify-content-center">
+    <form method="POST" action="/add-artist">
+        {{ form.hidden_tag() }} <!--add form control here class_??? -->
+
+      {% for field in form
+            if field.widget.input_type != 'hidden' %}
+
+        <p>
+          {{ field.label }}
+          {{ field(class_="form-control")}}
+
+          {% for error in field.errors %}
+            {{ error }}
+          {% endfor %}
+        </p>
+
+      {% endfor %}
+      <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+  </div>
+
+</div>
+
+<div class="container">
+    <div class="row">
+  {% for artist in artist %}
+      <div class="m-3">
+       <a href="/artist/{{artist.id}}"> <img src="{{artist.img_url}}" alt=""> 
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h3 class="text-center m-3">Post</h3>
+
+    <div class="border">
+        <img src="{{g.user.img_url}}" class="rounded-cricle" width="200p" alt="">
+        <p>{{g.user.username}}</p>
+
+        <form action="/user/edit/{{g.user.id}}">
+            <button class="btn btn-success btn-sm">Edit user</button>
+        </form>
+
+    <form action="/users/delete" method="POST">
+        <button class="btn btn-danger  btn-sm mt-5">Delete user</button>
+    </form>
+        <a href="/post/{{g.user.id}}" class="btn btn-primary btn-sm m-3">make post</a>
+        <div class="info bg-primary m-3">
+            <!-- add links to pages for each  -->
+            <p class="d-inline m-3"> Following: {{ g.user.following|length }}</p>
+            <p class="d-inline m-3">Followers: {{ g.user.followers|length }}</p>
+            <p class="d-inline m-3"> Posts: {{ g.user.post|length }}</p>
+        </div>
+    </div>
+    
+    {% for post in posts %}
+    <div class="border m-3" class="col-6">
+        <img src="{{post.user.img_url}}" width="50" class="m-2" alt="">
+        <p>
+            <b>{{post.user.username}}:</b> </span>{{post.text}}
+            <form action="/like/{{post.id}}">
+                {% if post not in g.user.post%}
+                <button class="btn btn-success btn-sm">Like</button>
+                {% endif %}
+            </form>
+        </p>
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}
