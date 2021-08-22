@@ -1,44 +1,61 @@
-{% extends 'index.html' %}
+ {% extends 'index.html' %}
 
 {% block content %}
 
 <div class="container">
-    <h3 class="text-center m-3">Post</h3>
+    <div class="row">
 
-    <div class="border">
-        <img src="{{g.user.img_url}}" class="rounded-cricle" width="200p" alt="">
-        <p>{{g.user.username}}</p>
+        <div class="mt-5 w-25 float-left col-4">
+            <img src="{{g.user.img_url}}"  width="200p" alt="user image">
 
-        <form action="/user/edit/{{g.user.id}}">
-            <button class="btn btn-success btn-sm">Edit user</button>
-        </form>
+            <p>{{g.user.username}}</p>
 
-    <form action="/users/delete" method="POST">
-        <button class="btn btn-danger  btn-sm mt-5">Delete user</button>
-    </form>
-        <a href="/post/{{g.user.id}}" class="btn btn-primary btn-sm m-3">make post</a>
-        <div class="info bg-primary m-3">
-            <!-- add links to pages for each  -->
-            <p class="d-inline m-3"> Following: {{ g.user.following|length }}</p>
-            <p class="d-inline m-3">Followers: {{ g.user.followers|length }}</p>
-            <p class="d-inline m-3"> Posts: {{ g.user.post|length }}</p>
+            <div class="d-inline">
+                <a href="/user/edit/{{g.user.id}}" class="btn btn-success btn-sm">Edit</a>
+                <a href="/post/{{g.user.id}}" class="btn btn-primary btn-sm m-3">Make Post</a>
+
+                <form action="/users/delete" method="POST">
+                    <button class="btn btn-danger  btn-sm mt-5">Delete user</button>
+                </form>
+
+            </div>
+
+            <div class="info bg-primary text-center">
+                <!-- add links to pages for each  -->
+                <a href="/following" class="d-inline m-3 text-dark"> Following: {{ g.user.following|length }}</a>
+                <a href="/followers" class="d-inline m-3 text-dark">Followers: {{ g.user.followers|length }}</a>
+                <!-- <a href="" class="d-inline m-3 text-dark"> Posts: {{ g.user.post|length }}</a> -->
+            </div>
+
+        </div>
+
+        <div class="container overflow-auto col-6 mt-5">
+            {% for post in posts %}
+            <div class="border m-3 d-flex">
+
+                <img src="{{post.user.img_url}}" class="user-post-img m-2" alt="">
+
+                <p class="mt-3">
+                    <b>{{post.user.username}}:</b>
+
+                    {{post.text}}
+
+                    <form action="/like/{{post.id}}">
+                        {% if post not in g.user.post%}
+                        <button class="btn btn-success btn-sm justify-content-end m-3">Like</button>
+                        {% else %}
+                    </form>
+
+                    <form action="/post/delete/{{post.id}}" method="POST">
+                        <button class="btn btn-danger btn-sm m-3">Delete</button>
+                    </form>
+                        {% endif %}
+                </p>
+
+            </div>
+            {% endfor %}
         </div>
     </div>
-    
-    {% for post in posts %}
-    <div class="border m-3" class="col-6">
-        <img src="{{post.user.img_url}}" width="50" class="m-2" alt="">
-        <p>
-            <b>{{post.user.username}}:</b> </span>{{post.text}}
-            <form action="/like/{{post.id}}">
-                {% if post not in g.user.post%}
-                <button class="btn btn-success btn-sm">Like</button>
-                {% endif %}
-            </form>
-        </p>
-    </div>
-    {% endfor %}
-
 </div>
 
 {% endblock %}

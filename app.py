@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, session, g, flash
 from flask_debugtoolbar import DebugToolbarExtension
-from models import connect_db, db, Artist, User, Follows, Post
+from models import connect_db, db, Artist, User, Post
 from forms import AddArtist, Signup, Login, PostForm, Edit
 from api import get_artist_id, get_artist_albums, get_album_tracks, get_track_lyrics
 
@@ -58,14 +58,18 @@ def home():
     
     form = Signup()
 
-    if form.validate_on_submit():
-        username = form.username.data
-        password = form.password.data
-        img_url = form.img_url.data or form.img_url.default
-        new_user = User.signup(username=username, password=password, img_url=img_url)
+    try:
+        if form.validate_on_submit():
+            username = form.username.data
+            password = form.password.data
+            img_url = form.img_url.data or form.img_url.default
+            new_user = User.signup(username=username, password=password, img_url=img_url)
 
-        db.session.commit()
-        do_login(new_user)
+            db.session.commit()
+            do_login(new_user)
+            return redirect('/')
+    except:
+        flash('Error signing up. Please try again', 'danger')
         return redirect('/')
 
     
@@ -94,7 +98,7 @@ def logout():
     do_logout()
     return redirect("/login")
 
-###### user and post routes
+###### user and post routes ########
 
 @app.route('/all-users')
 def show_all_users():
@@ -137,19 +141,44 @@ def make_post(user_id):
         return redirect(f'/user/{g.user.id}')
     return render_template('post.html', form=form)
 
+@app.route('/post/delete/<int:id>', methods=['POST'])
+def delete_post(id):
+    """ delete a post """
+
+    post = Post.query.get(id)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(f'/user/{g.user.id}')
+
 @app.route('/follow/<int:followed_id>')
 def follow_users(followed_id):
     """ set the follows for logged in user """
-    #### make it so that a user can not follow themselves
+   
     followed_user = User.query.get(followed_id)
     g.user.following.append(followed_user)
 
     db.session.commit()
     return redirect(f'/user/{g.user.id}')
 
+@app.route('/followers')
+def view_followers():
+    """ view all current users followers """
+
+    user = g.user
+    return render_template('followers.html', user=user)
+
+@app.route('/following')
+def view_following():
+    """ view all users current user is following """
+
+    user = g.user
+    return render_template('following.html', user=user)
+
+
 @app.route('/like/<int:post_id>')
 def like_post(post_id):
     """ allows logged in user to like a post """
+
     post = Post.query.get(post_id)
     g.user.likes.append(post)
     db.session.commit()
@@ -177,7 +206,7 @@ def delete_user():
     """Delete logged in user."""
 
     do_logout()
-    post = Post.query.filter(Post == g.user.id).delete()
+    
     db.session.delete(g.user)
     db.session.commit()
 

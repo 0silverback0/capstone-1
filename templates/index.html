@@ -5,12 +5,15 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="static/styles.css">
+    <link rel="stylesheet" href="../static/styles.css">
 </head>
 <body>
     <header class="bg-primary">
+
         <h1 class="text-center">Hip Hop App</h1>
+
         <ul class="nav justify-content-center">
+
             {% if not g.user %}
             <li class="nav-item">
                 <a href="/signup" class="nav-link text-danger">Signup</a>
@@ -19,32 +22,35 @@
                 <a href="/login" class="nav-link text-danger">Login</a>
             </li>
             {% endif %}
+
             {% if g.user %}
-            <li class="nav-item">
-                <a href="/logout" class="nav-link text-danger">Logout</a>
-            </li>
-            <li class="nav-item">
-                <a href="/all-users" class="nav-link text-danger">find users</a>
-            </li>
             <li class="nav-item">
                 <a href="/user/{{g.user.id}}" class="nav-link text-danger">{{g.user.username}}</a>
             </li>
             <li class="nav-item">
-                <a href="/add-artist" class="nav-link text-danger">find Artist</a>
+                <a href="/all-users" class="nav-link text-danger">Find users</a>
+            </li>
+            <li class="nav-item">
+                <a href="/add-artist" class="nav-link text-danger">Find Artist</a>
+            </li>
+            <li class="nav-item">
+                <a href="/logout" class="nav-link text-danger">Logout</a>
             </li>
             {% endif %}
             
-            
         </ul>
+
     </header>
+
     {% for category, message in get_flashed_messages(with_categories=True) %}
-  <div class="alert alert-{{ category }}">{{ message }}</div>
-  {% endfor %}
+    <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+
     {% block content %}
     <div class="container">
         <p>The place for all things hip hop</p>
         
-        <div class="home justify-content-cente">
+        <div>
             <a  class="btn btn-primary" href="/add-artist">add artist</a>
             <div class="row">
                 <div class="col">
@@ -59,5 +65,7 @@
     {% endblock %}
 
     <script type="text/javascript" src="http://tracking.musixmatch.com/t1.0/AMa6hJCIEzn1v8RuOP"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="../static/app.js"></script>
 </body>
 </html>
