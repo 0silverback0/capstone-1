@@ -25,11 +25,12 @@
                 <a href="/following" class="d-inline m-3 text-dark"> Following: {{ g.user.following|length }}</a>
                 <a href="/followers" class="d-inline m-3 text-dark">Followers: {{ g.user.followers|length }}</a>
                 <!-- <a href="" class="d-inline m-3 text-dark"> Posts: {{ g.user.post|length }}</a> -->
+                <a href="" class="d-inline m-3 text-dark"> Likes: {{ g.user.likes|length }}</a>
             </div>
 
         </div>
 
-        <div class="container overflow-auto col-6 mt-5">
+        <div class="container post col-6 mt-5">
             {% for post in posts %}
             <div class="border m-3 d-flex">
 
@@ -40,16 +41,26 @@
 
                     {{post.text}}
 
+                    {% if post in user.likes %}
+
                     <form action="/like/{{post.id}}">
-                        {% if post not in g.user.post%}
-                        <button class="btn btn-success btn-sm justify-content-end m-3">Like</button>
-                        {% else %}
+                        <button class="like btn btn-success btn-sm m-3" data-id="{{post.id}}">
+                            <i class=""></i>
+                        </button>
                     </form>
+
+                    {% elif post not in g.user.post%}
+                    <form action="/like/{{post.id}}">
+                        <button class="like btn btn-danger btn-sm m-3" data-id="{{post.id}}">
+                            <i class=""></i>
+                        </button>
+                    </form>
+                    {% else %}
 
                     <form action="/post/delete/{{post.id}}" method="POST">
                         <button class="btn btn-danger btn-sm m-3">Delete</button>
                     </form>
-                        {% endif %}
+                    {% endif %}
                 </p>
 
             </div>

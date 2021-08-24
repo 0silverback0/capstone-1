@@ -1,8 +1,9 @@
-from flask import Flask, render_template, redirect, session, g, flash
+from flask import Flask, render_template, redirect, session, g, flash, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
-from models import connect_db, db, Artist, User, Post
+from models import connect_db, db, Artist, User, Post, Likes
 from forms import AddArtist, Signup, Login, PostForm, Edit
 from api import get_artist_id, get_artist_albums, get_album_tracks, get_track_lyrics
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Deja1218@localhost/hiphop'
@@ -180,9 +181,16 @@ def like_post(post_id):
     """ allows logged in user to like a post """
 
     post = Post.query.get(post_id)
-    g.user.likes.append(post)
-    db.session.commit()
-    return redirect(f'/user/{g.user.id}')
+
+    if post not in g.user.likes:
+        g.user.likes.append(post)
+        db.session.commit()
+        return redirect(f'/user/{g.user.id}')
+        
+    if post in g.user.likes:
+        g.user.likes.remove(post)
+        db.session.commit()
+        return redirect(f'/user/{g.user.id}')
 
 @app.route('/user/edit/<int:id>', methods=['GET', 'POST'])
 def edit_user(id):
