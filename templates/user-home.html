@@ -45,14 +45,14 @@
 
                     <form action="/like/{{post.id}}">
                         <button class="like btn btn-success btn-sm m-3" data-id="{{post.id}}">
-                            <i class=""></i>
+                            <i class="fas fa-thumbs-up"></i>
                         </button>
                     </form>
 
                     {% elif post not in g.user.post%}
                     <form action="/like/{{post.id}}">
                         <button class="like btn btn-danger btn-sm m-3" data-id="{{post.id}}">
-                            <i class=""></i>
+                            <i class="far fa-thumbs-up"></i>
                         </button>
                     </form>
                     {% else %}

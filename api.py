@@ -7,7 +7,7 @@ def get_artist_id(artist):
     """ returns artist id from api """
 
     res = requests.get(f'{BASE_URL}artist.search',
-    params={'q_artist': artist, 'page_size': 1, 'apikey': 'c6616ea169eda990ca4e9f3bc7e17b5c'})
+    params={'q_artist': artist, 'page_size': 1, 'apikey': API_SECRET_KEY})
 
     data = res.json()
     artist_id = data['message']['body']['artist_list'][0]['artist']['artist_id']
