@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired
 
 class AddArtist(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
-    img_url = StringField('image URL', validators=[DataRequired()])
+    img_url = StringField('image URL')
 
 class Signup(FlaskForm):
     username = StringField('Name', validators=[DataRequired()])

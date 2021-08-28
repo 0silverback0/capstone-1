@@ -1,8 +1,9 @@
 from flask import Flask, render_template, redirect, session, g, flash, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
-from models import connect_db, db, Artist, User, Post, Likes
+from models import connect_db, db, Artist, User, Post
 from forms import AddArtist, Signup, Login, PostForm, Edit
 from api import get_artist_id, get_artist_albums, get_album_tracks, get_track_lyrics
+from sqlalchemy import exc
 
 
 app = Flask(__name__)
@@ -225,16 +226,20 @@ def delete_user():
 @app.route('/add-artist', methods=['GET', 'POST'])
 def add_artist():
     """ creates an artist and stored it """
-    #make more of a search style ie: if not in database go find it
+    
     form = AddArtist()
     if form.validate_on_submit():
-        name = form.name.data
-        img = form.img_url.data
-        new_artist = Artist(name=name, artist_id=get_artist_id(name), img_url=img)
-        db.session.add(new_artist)
-        db.session.commit()
-    #add rollback and flash if artist already exist
-        return redirect('/add-artist')
+        try:
+            name = form.name.data
+            img = form.img_url.data or form.img_url.default
+            new_artist = Artist(name=name, artist_id=get_artist_id(name), img_url=img)
+            db.session.add(new_artist)
+            db.session.commit()
+            return redirect('/add-artist')
+        except:
+            flash('Error Adding Artist', 'danger')
+            db.session.rollback()
+            return redirect('/add-artist')
     artist = Artist.query.all()
     return render_template('add-artist.html', form=form, artist=artist)
 

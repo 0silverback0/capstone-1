@@ -7,3 +7,11 @@ img{
     height: 300px;
     width: 300px;
 }
+
+.hov{
+    border: solid 10px blue;
+}
+
+a{
+    text-decoration: none;
+}

@@ -21,16 +21,14 @@
             </div>
 
             <div class="info bg-primary text-center">
-                <!-- add links to pages for each  -->
                 <a href="/following" class="d-inline m-3 text-dark"> Following: {{ g.user.following|length }}</a>
                 <a href="/followers" class="d-inline m-3 text-dark">Followers: {{ g.user.followers|length }}</a>
-                <!-- <a href="" class="d-inline m-3 text-dark"> Posts: {{ g.user.post|length }}</a> -->
                 <a href="" class="d-inline m-3 text-dark"> Likes: {{ g.user.likes|length }}</a>
             </div>
 
         </div>
 
-        <div class="container post col-6 mt-5">
+        <div class="container col-6 mt-5">
             {% for post in posts %}
             <div class="border m-3 d-flex">
 

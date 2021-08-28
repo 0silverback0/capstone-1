@@ -8,7 +8,7 @@
 
   <div class="row justify-content-center">
     <form method="POST" action="/add-artist">
-        {{ form.hidden_tag() }} <!--add form control here class_??? -->
+        {{ form.hidden_tag() }}
 
       {% for field in form
             if field.widget.input_type != 'hidden' %}
@@ -32,8 +32,9 @@
 <div class="container">
     <div class="row">
   {% for artist in artist %}
-      <div class="m-3">
-       <a href="/artist/{{artist.id}}"> <img src="{{artist.img_url}}" alt=""> 
+      <div class="hover p-2 m-3">
+       <a href="/artist/{{artist.id}}"> <img src="{{artist.img_url}}" alt=""> </a>
+        <small class="d-block text-center">{{artist.name}}</small>
       </div>
     {% endfor %}
   </div>

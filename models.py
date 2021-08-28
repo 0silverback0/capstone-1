@@ -53,7 +53,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.Text, unique=True, nullable=False)
     password = db.Column(db.Text, nullable=False)
-    img_url = db.Column(db.Text, default='https://bit.ly/3ihhSWp')
+    img_url = db.Column(db.Text, default='https://bit.ly/2WBaPjg')
 
     following = db.relationship(
         "User",
@@ -119,5 +119,5 @@ class Artist(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.Text, nullable=False)
     artist_id = db.Column(db.Integer, nullable=False, unique=True)
-    img_url = db.Column(db.Text, nullable=False)
+    img_url = db.Column(db.Text, default='https://bit.ly/2WBaPjg')
 
