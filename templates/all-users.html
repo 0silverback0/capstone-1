@@ -10,7 +10,13 @@
 <div class="col m-3 text-center">
     <img src="{{user.img_url}}" />
     <p class="">{{user.username}}</p>
-    <a href="/follow/{{user.id}}" class="btn btn-primary">follow</a>
+
+    {% if user not in g.user.following %}
+    <a href="/follow/{{user.id}}" class="btn btn-primary">Follow</a>
+    {% else %}
+    <a href="/follow/{{user.id}}" class="btn btn-danger">Unfollow</a>
+    {% endif %}
+
 </div>
 {% endfor %}
 </div>

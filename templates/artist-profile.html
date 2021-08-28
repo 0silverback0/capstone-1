@@ -2,15 +2,19 @@
 
 {% block content %}
 
-<h1>{{artist.name}}'s Albums</h1>
-<ul>
-    {% for key, value in albums.items() %}
-        
-    <a href="/album-tracks/{{value}}"> <li>{{key}}</li> </a>
+<h1 class="text-center">{{artist.name}}'s Albums</h1>
 
-    {% endfor %}
-</ul>
+<div class="container text-center mt-5">
+    <ul class="list-unstyled">
+        {% for key, value in albums.items() %}
+            
+        <a href="/album-tracks/{{value}}" class="text-decoration-none"> <li>{{key}}</li> </a>
 
-<a href="/add-artist" class="btn btn-primary">Go back</a>
+        {% endfor %}
+    </ul>
+
+</div>
+
+<a href="/add-artist" class="btn btn-primary m-3">Go back</a>
 
 {% endblock %}

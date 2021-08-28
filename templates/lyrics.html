@@ -2,11 +2,12 @@
 
 {% block content %}
 
-<div class="container">
-    <h1>Lyrics</h1>
+<h1 class="text-center">Lyrics</h1>
+
+<div class="container text-center">
     <p>{{lyrics.lyrics}}</p>
     <small>{{lyrics.copyright}}</small>
 </div>
 
-<a href="/add-artist" class="btn btn-primary">Go back</a>
+<a href="/add-artist" class="btn btn-primary m-3">Go back</a>
 {% endblock %}

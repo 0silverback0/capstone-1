@@ -3,7 +3,6 @@ from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, Artist, User, Post
 from forms import AddArtist, Signup, Login, PostForm, Edit
 from api import get_artist_id, get_artist_albums, get_album_tracks, get_track_lyrics
-from sqlalchemy import exc
 
 
 app = Flask(__name__)
@@ -157,6 +156,11 @@ def follow_users(followed_id):
     """ set the follows for logged in user """
    
     followed_user = User.query.get(followed_id)
+
+    if followed_user in g.user.following:
+        g.user.following.remove(followed_user)
+        db.session.commit()
+        return redirect(f'/user/{g.user.id}')
     g.user.following.append(followed_user)
 
     db.session.commit()

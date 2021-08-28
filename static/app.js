@@ -4,3 +4,4 @@ $('.hover').hover(function () {
         $(this).css("box-shadow", "none")
     }
 )
+
