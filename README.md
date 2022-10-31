@@ -1,5 +1,5 @@
-# capstone-1
-This Hip hop app is the first of two capstone projects in Springboard's software enginer career track.
+# Social Concept Hip-hop app
+
 
 You can see the current version at https://flask-hiphop.herokuapp.com/
 
