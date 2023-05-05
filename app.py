@@ -3,10 +3,10 @@ from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, Artist, User, Post
 from forms import AddArtist, Signup, Login, PostForm, Edit
 from api import get_artist_id, get_artist_albums, get_album_tracks, get_track_lyrics
-
+import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Deja1218@localhost/hiphop'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SECRET_KEY'] = "Alchemist"
